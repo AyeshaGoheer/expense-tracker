@@ -1,5 +1,15 @@
 from django.db import models
 
+class Tag(models.Model):
+    name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Tag'
+        verbose_name_plural = 'Tags'
+
 
 class Transaction(models.Model):
     user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
@@ -7,6 +17,7 @@ class Transaction(models.Model):
     date = models.DateField()
     description = models.CharField(max_length=100)
     category = models.ForeignKey('Category', on_delete=models.CASCADE)
+    tags = models.ManyToManyField(Tag, blank=True)
     transaction_type = models.CharField(max_length=10, choices=(('expense', 'Expense'), ('income', 'Income')))
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
