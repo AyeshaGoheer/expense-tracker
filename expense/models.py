@@ -23,7 +23,7 @@ class Transaction(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.description
+        return "[" + self.transaction_type + "] " + self.description + " - " + str(self.amount)
 
     class Meta:
         ordering = ('-date',)
