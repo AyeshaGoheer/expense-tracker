@@ -78,21 +78,21 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
-DATABASE_ROUTERS = ['expense.routers.SecondaryDatabaseRouter']
+# DATABASE_ROUTERS = ['expense.routers.SecondaryDatabaseRouter']
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": environ.get('DB_NAME'),
-        "USER": environ.get('DB_USER'),
-        "PASSWORD": environ.get('DB_PASSWORD'),
-        "HOST": environ.get('DB_HOST'),
-        "PORT": "5432",
-    },
-    "secondary": {
+    #     "ENGINE": "django.db.backends.postgresql",
+    #     "NAME": environ.get('DB_NAME'),
+    #     "USER": environ.get('DB_USER'),
+    #     "PASSWORD": environ.get('DB_PASSWORD'),
+    #     "HOST": environ.get('DB_HOST'),
+    #     "PORT": "5432",
+    # },
+    # "secondary": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": environ.get('RDB_NAME'),
         "USER": environ.get('RDB_USER'),
