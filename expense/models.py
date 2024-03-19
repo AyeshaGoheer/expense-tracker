@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Tag(models.Model):
     name = models.CharField(max_length=50)
 
@@ -17,13 +18,13 @@ class Transaction(models.Model):
     date = models.DateField()
     description = models.CharField(max_length=100)
     category = models.ForeignKey('Category', on_delete=models.CASCADE)
-    tags = models.ManyToManyField(Tag, blank=True)
+    tags = models.ManyToManyField(Tag, blank=True, related_name='transactions')
     transaction_type = models.CharField(max_length=10, choices=(('expense', 'Expense'), ('income', 'Income')))
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return "[" + self.transaction_type + "] " + self.description + " - " + str(self.amount)
+        return f"[{self.transaction_type}] {self.description} - {str(self.amount)}"
 
     class Meta:
         ordering = ('-date',)
@@ -49,7 +50,7 @@ class Budget(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.month.strftime('%B %Y') + ' Budget'
+        return f"{self.month.strftime('%B %Y')} Budget"
 
     class Meta:
         verbose_name = 'Budget'
