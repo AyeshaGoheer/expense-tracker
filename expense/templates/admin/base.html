@@ -1,0 +1,37 @@
+{% extends 'admin/base.html' %}
+
+{% block extrahead %}{{ block.super }}
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
+          rel="stylesheet">
+
+{% endblock %}
+
+{% block extrastyle %}{{ block.super }}
+    <style>
+        html[data-theme="light"], :root {
+            --primary: #59ceb5;
+            --secondary: #2b3a4a;
+            --link-fg: #7c449b;
+            --link-selected-fg: #8f5bb2;
+            
+            
+            --body-bg: #f5f5f5;
+
+            --error-fg: #ba2121;
+
+            --message-success-bg: #5b6be8;
+            --message-warning-bg: #f5b225;
+            --message-error-bg: #ec536c;
+
+            --header-color: #ffc;
+            --header-branding-color: var(--accent);
+            --header-bg: var(--secondary);
+            --header-link-color: var(--primary-fg);
+
+            --font-family-primary: 'Nunito', sans-serif;
+        }
+    </style>
+{% endblock %}
