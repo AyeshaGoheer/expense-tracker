@@ -32,11 +32,11 @@ DEBUG = environ.get('DEBUG', 'False')
 ALLOWED_HOSTS = []
 
 SITE_NAME = 'Expense Tracker'
+CURRENCY = 'PKR'
 
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -45,6 +45,7 @@ INSTALLED_APPS = [
 
     # Local apps
     'expense',
+    'core.apps.ETAdminConfig',
 ]
 
 MIDDLEWARE = [

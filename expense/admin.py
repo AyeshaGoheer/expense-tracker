@@ -6,6 +6,7 @@ class TransactionAdmin(admin.ModelAdmin):
     list_display = ('transaction_type', 'description', 'date', 'category', 'amount')
     list_filter = ('user', 'date', 'category', 'transaction_type')
     search_fields = ('description', 'category__name', 'tags__name')
+    list_per_page = 20
 
     def get_form(self, request, obj=None, **kwargs):
         form = super().get_form(request, obj, **kwargs)
