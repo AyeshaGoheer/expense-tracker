@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # Local apps
-    'expense',
+    'expense.apps.ExpenseConfig',
     'core.apps.ETAdminConfig',
 ]
 
@@ -86,14 +86,6 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 DATABASES = {
     "default": {
-    #     "ENGINE": "django.db.backends.postgresql",
-    #     "NAME": environ.get('DB_NAME'),
-    #     "USER": environ.get('DB_USER'),
-    #     "PASSWORD": environ.get('DB_PASSWORD'),
-    #     "HOST": environ.get('DB_HOST'),
-    #     "PORT": "5432",
-    # },
-    # "secondary": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": environ.get('RDB_NAME'),
         "USER": environ.get('RDB_USER'),

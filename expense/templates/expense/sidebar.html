@@ -7,7 +7,7 @@
     <!-- LOGO -->
     <div class="topbar-left">
         <div class="text-center">
-            <a href="#" class="logo navbar-brand">{{ SITE_NAME }}</a>
+            <a href="{% url 'index' %}" class="logo navbar-brand">{{ SITE_NAME }}</a>
         </div>
     </div>
 
@@ -20,18 +20,26 @@
                 <li class="menu-title">Overview</li>
 
                 <li>
-                    <a href="#" class="waves-effect waves-light"><i
-                            class="mdi mdi-book-plus"></i><span> Link 1 </span></a>
+                    <a href="{% url 'index' %}" class="waves-effect waves-light"><i
+{#                            https://pictogrammers.github.io/@mdi/font/2.0.46/#}
+                            class="mdi mdi-view-dashboard"></i><span> Dashboard </span></a>
+                </li>
+                
+                <li class="menu-title">Admin</li>
+
+                <li>
+                    <a href="/admin/" class="waves-effect waves-light"><i
+                            class="mdi mdi-account"></i><span> Administration </span></a>
                 </li>
 
                 <li>
-                    <a href="#" class="waves-effect waves-light"><i
-                            class="mdi mdi-book-plus"></i><span> Link 2 </span></a>
+                    <a href="/admin/expense/transaction/" class="waves-effect waves-light"><i
+                            class="mdi mdi-chart-line"></i><span> Transactions </span></a>
                 </li>
 
                 <li>
-                    <a href="#" class="waves-effect waves-light"><i
-                            class="mdi mdi-book-plus"></i><span> Link 3 </span></a>
+                    <a href="/admin/expense/budget/" class="waves-effect waves-light"><i
+                            class="mdi mdi-calculator"></i><span> Budget </span></a>
                 </li>
             </ul>
         </div>
