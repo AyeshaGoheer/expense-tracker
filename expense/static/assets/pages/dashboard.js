@@ -121,10 +121,9 @@ function getRandomColor() {
     const dashboard = new Dashboard();
     // dashboard.init();
     $.ajax({
-        url: '/expense/',
+        url: '/api/expense/',
         type: 'GET',
         success: function (data) {
-            console.log(data);
             $('#budget').prepend(data.budget);
             $('#consumption').prepend(data.consumption);
             $('#expense-this-month').prepend(data.expense_this_month);

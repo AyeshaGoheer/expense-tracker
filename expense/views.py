@@ -3,8 +3,9 @@ from django.db.models import Sum, F
 from django.contrib.postgres.aggregates import ArrayAgg
 from django.shortcuts import render
 from django.http import JsonResponse
-from .models import Transaction, Budget
 from django.db.models.functions import TruncDate, TruncWeek
+from django.db import connection
+from .models import Transaction, Budget
 
 
 def index(request):
@@ -13,7 +14,8 @@ def index(request):
 
 def expense(request):
     current_date = datetime.date.today()
-    budget = Budget.objects.filter(month__year=current_date.year, month__month=current_date.month).values('amount').first()
+    budget = Budget.objects.filter(month__year=current_date.year, month__month=current_date.month).values(
+        'amount').first()
     transactions = Transaction.objects.annotate(
         category_name=F('category__name'),
         tag_names=ArrayAgg('tags__name')
@@ -22,7 +24,8 @@ def expense(request):
     ).filter(transaction_type='expense')
     transactions_this_month = transactions.filter(date__year=current_date.year, date__month=current_date.month)
     total_expense = transactions.filter(transaction_type='expense').aggregate(total=Sum('amount'))['total']
-    expense_this_month = transactions_this_month.filter(transaction_type='expense').aggregate(total=Sum('amount'))['total']
+    expense_this_month = transactions_this_month.filter(transaction_type='expense').aggregate(total=Sum('amount'))[
+        'total']
     consumption = expense_this_month / budget['amount'] * 100
 
     daily_expenses = (
@@ -82,3 +85,54 @@ def expense(request):
         'bar_chart_data': bar_chart_data,
     }
     return JsonResponse(context, status=200, safe=False)
+
+
+def report(request):
+    with connection.cursor() as cursor:
+        cursor.execute("""
+            WITH LedgerCTE AS (
+              SELECT
+                t.id,
+                t.date,
+                t.description,
+                t.amount,
+                t.transaction_type,
+                c.name as category_name,
+                array_agg(tag.name) AS tag_names
+              FROM
+                expense_transaction t
+              JOIN
+                expense_category c ON t.category_id = c.id
+              LEFT JOIN
+                expense_transaction_tags tt ON t.id = tt.transaction_id
+              LEFT JOIN
+                expense_tag tag ON tt.tag_id = tag.id
+              GROUP BY
+                t.id,
+                t.date,
+                t.description,
+                t.amount,
+                t.transaction_type,
+                c.name
+              ORDER BY
+                t.date
+            )
+            SELECT
+              id,
+              date,
+              description,
+              amount,
+              transaction_type,
+              category_name,
+              tag_names,
+              SUM(CASE WHEN transaction_type = 'income' THEN amount ELSE -amount END)
+                  OVER (ORDER BY date, id) AS running_balance
+            FROM
+              LedgerCTE
+            ORDER BY
+              date, id;
+        """)
+        columns = [col[0] for col in cursor.description]
+        transactions = [dict(zip(columns, row)) for row in cursor.fetchall()]
+
+    return render(request, 'expense/report.html', {'transactions': transactions})
