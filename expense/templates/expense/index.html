@@ -63,7 +63,7 @@
                                         </div>
                                         <div class="p-4">
                                             <h6 class="text-uppercase mb-3">Overall Expense</h6>
-                                            <h4 class="mb-0" id="total-expense">{{ total_expense | floatformat }}<small class="ml-2 text-primary">PKR</small></h4>
+                                            <h4 class="mb-0" id="total-expense">{{ total_expense | floatformat:"g" }}<small class="ml-2 text-primary">PKR</small></h4>
                                         </div>
                                     </div>
 
@@ -102,10 +102,10 @@
                                             
                                             <ul class="list-unstyled list-inline text-center mb-0 mt-3">
                                                 <li class="list-inline-item">
-                                                    <p class="mb-0"><i class="mdi mdi-checkbox-blank-circle mr-2 text-success"></i>Profit</p> 
+                                                    <p class="mb-0"><i class="mdi mdi-checkbox-blank-circle mr-2 text-success"></i>Income</p> 
                                                 </li>
                                                 <li class="list-inline-item">
-                                                    <p class="mb-0"><i class="mdi mdi-checkbox-blank-circle mr-2 text-danger"></i>Lost</p>
+                                                    <p class="mb-0"><i class="mdi mdi-checkbox-blank-circle mr-2 text-danger"></i>Expense</p>
                                                 </li>
                                             </ul>
                                         </div>

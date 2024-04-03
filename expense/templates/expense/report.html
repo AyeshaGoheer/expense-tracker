@@ -53,7 +53,7 @@
                             <tbody>
                                 {% for transaction in transactions %}
                                     <tr>
-                                        <td>{{ forloop.counter }}</td>
+                                        <td><a href="/admin/expense/transaction/{{ transaction.id }}/change/">{{ forloop.counter }}</a></td>
                                         <td>{{ transaction.date }}</td>
                                         <td>{{ transaction.description }}</td>
                                         <td>{{ transaction.category_name }}</td>

@@ -26,6 +26,19 @@ def expense(request):
     total_expense = transactions.filter(transaction_type='expense').aggregate(total=Sum('amount'))['total']
     expense_this_month = transactions_this_month.filter(transaction_type='expense').aggregate(total=Sum('amount'))[
         'total']
+    if not budget or not expense_this_month:
+        context = {
+            'budget': float(budget['amount']) if budget else 0,
+            'consumption': 0,
+            'expense_this_month': 0,
+            'total_expense': float(total_expense),
+            'area_chart_data': [],
+            'line_chart_data': [],
+            'donut_chart_data': [],
+            'bar_chart_data': [],
+        }
+        return JsonResponse(context, status=200, safe=False)
+
     consumption = expense_this_month / budget['amount'] * 100
 
     daily_expenses = (
